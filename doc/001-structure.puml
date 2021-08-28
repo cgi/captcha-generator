@@ -1,0 +1,49 @@
+@startuml
+
+<style>
+    .System {
+            BackGroundColor Yellow
+     }
+    .Controller {
+            BackGroundColor LightGreen
+     }
+    .Service {
+            BackGroundColor LightBlue
+     }
+    .Repository {
+            BackGroundColor Orange
+     }
+</style>
+
+package "User Location" {
+    actor User as u
+
+    component Browser as b
+    u -> b : Работает
+}
+
+package "Captcha-generator (spring-boot)" as app_p {
+    component "Servlet container" <<System>> as servlet
+
+    component "Controller" <<Controller>> as c
+
+    component "Service 1" <<Service>> as s1
+    component "Service 2" <<Service>> as s2
+    component "Service 3" <<Service>> as s3
+
+    component "Repository" <<Repository>> as r1
+    component "Repository" <<Repository>> as r2
+
+    servlet -> c : call
+    c --> s1
+    c --> s2
+    s2 --> s3
+
+    s1 ---> r1
+    s3 --> r2
+
+}
+
+b -> servlet
+
+@enduml
